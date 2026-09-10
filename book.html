@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Consultation | AutoHooked</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="centered-layout">
+  <div class="grid-bg">
+    <div class="gradient-glow top-glow"></div>
+  </div>
+
+  <nav class="top-nav">
+    <div class="nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <img src="image_ab0817.png" alt="AutoHooked Logo" class="logo-icon">
+        <span>Auto<span class="rainbow-text">Hooked</span></span>
+      </a>
+      <div class="nav-items">
+        <a href="index.html" class="nav-link">Return Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="booking-wrapper">
+    <div class="booking-panel glowing-box zoom-in">
+      <h1 class="section-heading gradient-text-dynamic text-center bounce-element">Book A Meeting</h1>
+      <p class="hero-text text-center slide-in-element">Select a convenient time below to discuss how we can help your business.</p>
+      
+      <form class="clean-form" onsubmit="event.preventDefault(); alert('Your consultation request has been saved successfully.');">
+        <div class="form-group slide-in-right-1">
+          <label>Your Full Name</label>
+          <input type="text" required placeholder="Full Name" class="input-focus-anim">
+        </div>
+
+        <div class="form-group slide-in-right-2">
+          <label>Work Email</label>
+          <input type="email" required placeholder="name@organisation.com.au" class="input-focus-anim">
+        </div>
+
+        <div class="form-group slide-in-right-3">
+          <label>Meeting Date</label>
+          <input type="date" required class="input-focus-anim">
+        </div>
+
+        <div class="form-group slide-in-right-4">
+          <label>Meeting Time</label>
+          <select required class="time-dropdown input-focus-anim">
+            <option value="" disabled selected>Select a 30-minute interval</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="10:30 AM">10:30 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="11:30 AM">11:30 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="12:30 PM">12:30 PM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="1:30 PM">1:30 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <option value="2:30 PM">2:30 PM</option>
+            <option value="3:00 PM">3:00 PM</option>
+            <option value="3:30 PM">3:30 PM</option>
+            <option value="4:00 PM">4:00 PM</option>
+            <option value="4:30 PM">4:30 PM</option>
+            <option value="5:00 PM">5:00 PM</option>
+            <option value="5:30 PM">5:30 PM</option>
+            <option value="6:00 PM">6:00 PM</option>
+          </select>
+        </div>
+
+        <button type="submit" class="submit-btn full-width pulse-button">Confirm Availability</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-wrap">
+      <p>&copy; Copyright 2026 AutoHooked, Inc. All rights reserved. Various trademarks held by their respective owners.</p>
+    </div>
+  </footer>
+</body>
+</html>
