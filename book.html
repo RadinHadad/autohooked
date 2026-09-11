@@ -6,6 +6,116 @@
   <title>Book Consultation | AutoHooked</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .booking-wrapper {
+      padding: 30px 24px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .booking-panel {
+      max-width: 930px;
+      width: 100%;
+      padding: 36px 42px;
+    }
+    .section-heading {
+      font-size: 2.6rem;
+      margin-bottom: 6px;
+    }
+    .hero-text {
+      font-size: 1.3rem;
+      margin-bottom: 24px;
+      color: #94a3b8;
+    }
+    .clean-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 0;
+    }
+    .form-group label {
+      font-size: 1.14rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background-color: #0b0f19 !important;
+      color: #f8fafc !important;
+      border: 1px solid #1e293b !important;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 1.3rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-group input[type="date"] {
+      color-scheme: dark;
+      cursor: pointer;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #475569;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+    .checkbox-inline-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      padding: 6px 0;
+    }
+    .checkbox-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 1.23rem;
+      color: #cbd5e1;
+      cursor: pointer;
+      text-transform: none;
+    }
+    .checkbox-item input {
+      accent-color: #0284c7;
+      width: 22px;
+      height: 22px;
+      margin: 0;
+      cursor: pointer;
+    }
+    .submit-btn {
+      margin-top: 10px;
+      padding: 15px 24px;
+      font-size: 1.4rem;
+      border-radius: 12px;
+    }
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .booking-panel {
+        padding: 24px 18px;
+      }
+    }
+  </style>
 </head>
 <body class="centered-layout">
   <div class="grid-bg">
@@ -30,43 +140,79 @@
       <p class="hero-text text-center slide-in-element">Select a convenient time below to discuss how we can help your business.</p>
       
       <form class="clean-form" onsubmit="event.preventDefault(); alert('Your consultation request has been saved successfully.');">
-        <div class="form-group slide-in-right-1">
-          <label>Your Full Name</label>
-          <input type="text" required placeholder="Full Name" class="input-focus-anim">
+        <div class="form-row">
+          <div class="form-group slide-in-right-1">
+            <label>Full Name *</label>
+            <input type="text" name="fullName" required placeholder="Full Name" class="input-focus-anim">
+          </div>
+          <div class="form-group slide-in-right-1">
+            <label>Mobile Phone *</label>
+            <input type="tel" name="phone" required placeholder="0400 000 000" class="input-focus-anim">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group slide-in-right-2">
+            <label>Personal Email *</label>
+            <input type="email" name="personalEmail" required placeholder="name@gmail.com" class="input-focus-anim">
+          </div>
+          <div class="form-group slide-in-right-2">
+            <label>Work Email (optional)</label>
+            <input type="email" name="workEmail" placeholder="name@company.com" class="input-focus-anim">
+          </div>
         </div>
 
         <div class="form-group slide-in-right-2">
-          <label>Work Email</label>
-          <input type="email" required placeholder="name@organisation.com.au" class="input-focus-anim">
+          <label>Services Interested In (optional)</label>
+          <div class="checkbox-inline-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="services" value="Phone Assistant">
+              Phone Assistant
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="services" value="ChatBot">
+              ChatBot
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="services" value="Social Media Assistant">
+              Social Media Assistant
+            </label>
+          </div>
         </div>
 
-        <div class="form-group slide-in-right-3">
-          <label>Meeting Date</label>
-          <input type="date" required class="input-focus-anim">
+        <div class="form-row">
+          <div class="form-group slide-in-right-3">
+            <label>Meeting Date *</label>
+            <input type="date" id="meetingDate" name="meetingDate" required class="input-focus-anim" onclick="this.showPicker && this.showPicker()">
+          </div>
+          <div class="form-group slide-in-right-3">
+            <label>Meeting Time *</label>
+            <select name="meetingTime" required class="time-dropdown input-focus-anim">
+              <option value="" disabled selected>Select an interval</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="10:30 AM">10:30 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+              <option value="11:30 AM">11:30 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="12:30 PM">12:30 PM</option>
+              <option value="1:00 PM">1:00 PM</option>
+              <option value="1:30 PM">1:30 PM</option>
+              <option value="2:00 PM">2:00 PM</option>
+              <option value="2:30 PM">2:30 PM</option>
+              <option value="3:00 PM">3:00 PM</option>
+              <option value="3:30 PM">3:30 PM</option>
+              <option value="4:00 PM">4:00 PM</option>
+              <option value="4:30 PM">4:30 PM</option>
+              <option value="5:00 PM">5:00 PM</option>
+              <option value="5:30 PM">5:30 PM</option>
+              <option value="6:00 PM">6:00 PM</option>
+            </select>
+          </div>
         </div>
 
         <div class="form-group slide-in-right-4">
-          <label>Meeting Time</label>
-          <select required class="time-dropdown input-focus-anim">
-            <option value="" disabled selected>Select a 30-minute interval</option>
-            <option value="10:00 AM">10:00 AM</option>
-            <option value="10:30 AM">10:30 AM</option>
-            <option value="11:00 AM">11:00 AM</option>
-            <option value="11:30 AM">11:30 AM</option>
-            <option value="12:00 PM">12:00 PM</option>
-            <option value="12:30 PM">12:30 PM</option>
-            <option value="1:00 PM">1:00 PM</option>
-            <option value="1:30 PM">1:30 PM</option>
-            <option value="2:00 PM">2:00 PM</option>
-            <option value="2:30 PM">2:30 PM</option>
-            <option value="3:00 PM">3:00 PM</option>
-            <option value="3:30 PM">3:30 PM</option>
-            <option value="4:00 PM">4:00 PM</option>
-            <option value="4:30 PM">4:30 PM</option>
-            <option value="5:00 PM">5:00 PM</option>
-            <option value="5:30 PM">5:30 PM</option>
-            <option value="6:00 PM">6:00 PM</option>
-          </select>
+          <label>Additional Notes (optional)</label>
+          <textarea name="notes" rows="2" placeholder="Tell us about your current setup..." class="input-focus-anim" style="resize: none;"></textarea>
         </div>
 
         <button type="submit" class="submit-btn full-width pulse-button">Confirm Availability</button>
@@ -76,8 +222,18 @@
 
   <footer class="main-footer">
     <div class="footer-wrap">
-      <p>&copy; Copyright 2026 AutoHooked, Inc. All rights reserved. Various trademarks held by their respective owners.</p>
+      <p>&copy; Copyright 2026 AutoHooked, Inc. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    const dateInput = document.getElementById('meetingDate');
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const yyyy = tomorrow.getFullYear();
+    const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+    const dd = String(tomorrow.getDate()).padStart(2, '0');
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
+  </script>
 </body>
 </html>
