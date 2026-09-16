@@ -151,12 +151,23 @@
   </footer>
 
   <script>
+    const WORKER_URL = "https://autohooked-chat.radin-hadad2k8.workers.dev/";
+
+    const systemPrompt = `You are the AutoHooked AI demo assistant. AutoHooked builds smart software helpers and AI automation for businesses:
+1. Accurate Website Chatbots: trained on business data to answer customer questions accurately without making things up.
+2. Smart Phone Answering: automated phone helper that answers calls instantly, identifies customer needs, and routes urgent calls to real staff.
+3. Social Media Helpers: automates direct messages across Instagram, Facebook, and other platforms to guide buyers and capture leads.
+4. Automatic Calendar Booking: checks live availability and books client appointments without double bookings.
+Keep answers friendly, concise, and under 3 sentences. Direct users to press the consultation button in the top right or press this link (https://autohooked.com/book.html) to navigate to the page if they want to get started or learn more.`;
+
+    let chatHistory = [];
+
     function sendTest(text) {
       document.getElementById('chatInput').value = text;
       handleChat(new Event('submit'));
     }
 
-    function handleChat(e) {
+    async function handleChat(e) {
       e.preventDefault();
       const input = document.getElementById('chatInput');
       const text = input.value.trim();
@@ -172,31 +183,38 @@
       input.value = '';
       chatBody.scrollTop = chatBody.scrollHeight;
 
+      chatHistory.push({ role: 'user', parts: [{ text: text }] });
+
       const typing = document.createElement('div');
       typing.className = 'message ai-message pop-in';
       typing.textContent = 'Reading your message...';
       chatBody.appendChild(typing);
       chatBody.scrollTop = chatBody.scrollHeight;
 
-      setTimeout(() => {
-        chatBody.removeChild(typing);
-        const aiMsg = document.createElement('div');
-        aiMsg.className = 'message ai-message pop-in';
-        
-        const lower = text.toLowerCase();
-        if (lower.includes('appointment') || lower.includes('book')) {
-          aiMsg.textContent = 'Yes, our automated helpers connect directly to your calendar to book, change, and manage client meetings for you automatically.';
-        } else if (lower.includes('platform') || lower.includes('support')) {
-          aiMsg.textContent = 'We support website chat windows, direct phone lines, and social media accounts including Instagram and Facebook.';
-        } else if (lower.includes('time') || lower.includes('save')) {
-          aiMsg.textContent = 'By answering common questions and booking meetings instantly, you no longer have to spend hours replying to messages manually.';
-        } else {
-          aiMsg.textContent = 'That is an excellent question. Our system is built to adapt and reply correctly to whatever your customers need.';
-        }
-        
-        chatBody.appendChild(aiMsg);
-        chatBody.scrollTop = chatBody.scrollHeight;
-      }, 900);
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: {
+              parts: [{ text: systemPrompt }]
+            },
+            contents: chatHistory
+          })
+        });
+
+        if (!response.ok) throw new Error('API request failed');
+
+        const data = await response.json();
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'I am having trouble answering right now. Please try again.';
+
+        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+        typing.textContent = reply;
+      } catch (err) {
+        typing.textContent = 'Our live assistant is temporarily unavailable. Please try again shortly or use the consultation link above.';
+      }
+
+      chatBody.scrollTop = chatBody.scrollHeight;
     }
   </script>
 </body>
