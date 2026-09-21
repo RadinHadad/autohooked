@@ -84,39 +84,52 @@ body {
 }
 
 .brand-logo {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 800;
   text-decoration: none;
-  color: #fff;
+  color: #ffffff;
   display: flex;
   align-items: center;
-  gap: 12px;
-  letter-spacing: -0.03em;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  gap: 14px;
+  letter-spacing: -0.04em;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.brand-logo::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+  background-size: 200% 200%;
+  border-radius: 8px 2px 8px 2px;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  transform: rotate(45deg);
+  animation: rainbowFlow 4s linear infinite;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-radius 0.6s ease;
 }
 
 .brand-logo:hover {
-  transform: scale(1.08) rotate(-2deg);
+  transform: scale(1.05);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
-.logo-icon {
-  height: 36px;
-  width: auto;
-  filter: invert(1) brightness(2);
-  mix-blend-mode: screen;
-  transition: transform 0.6s ease;
-}
-
-.brand-logo:hover .logo-icon {
-  transform: rotate(360deg);
+.brand-logo:hover::before {
+  transform: rotate(135deg) scale(1.1);
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(14, 165, 233, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 .rainbow-text {
-  background: linear-gradient(90deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #ff9a9e);
+  background: linear-gradient(to right, var(--accent-secondary), var(--accent-primary), var(--accent-tertiary), var(--accent-secondary));
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   color: transparent;
-  background-size: 200% 200%;
-  animation: rainbowFlow 4s linear infinite;
+  background-size: 300% 300%;
+  animation: rainbowFlow 5s linear infinite;
+  padding-left: 2px;
 }
 
 @keyframes rainbowFlow {
@@ -160,14 +173,13 @@ body {
   box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
 }
 
-/* Global breathing animation applied exclusively to all text and buttons inside main sections */
 main h1, main h2, main h3, main p, main label, main button, main .agent-name, main .agent-status, main .message {
-  animation: globalTextBreathe 4s ease-in-out infinite;
+  animation: globalTextBreathe 7s ease-in-out infinite;
 }
 
 @keyframes globalTextBreathe {
   0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.1)); }
-  50% { transform: scale(1.02); filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.5)); }
+  50% { transform: scale(1.025); filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.5)); }
 }
 
 main {
@@ -196,7 +208,6 @@ main {
   -webkit-text-fill-color: transparent;
 }
 
-/* Specific elements safely chain the global breathe effect alongside their own animation logic */
 .gradient-text-dynamic {
   background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary), var(--accent-tertiary), var(--accent-secondary));
   background-size: 300% 300%;
