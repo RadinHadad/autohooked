@@ -6,6 +6,43 @@
   <title>AutoHooked | Smart Software Helpers</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    /* Mobile Navigation Styles */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      padding: 8px;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        width: 100%;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .nav-items {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 0;
+        text-align: center;
+      }
+      .nav-items.active {
+        display: flex;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="grid-bg">
@@ -16,10 +53,20 @@
   <nav class="top-nav">
     <div class="nav-wrap">
       <a href="#home" class="brand-logo">
-        <img src="image_ab0817.png" alt="AutoHooked Logo" class="logo-icon">
+        <!-- Logo image removed here -->
         <span>Auto<span class="rainbow-text">Hooked</span></span>
       </a>
-      <div class="nav-items">
+      
+      <!-- Hamburger Menu Button -->
+      <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="nav-items" id="navItems">
         <a href="#services" class="nav-link">Services</a>
         <a href="#architecture" class="nav-link">How It Works</a>
         <a href="#demo" class="nav-link">Live Demo</a>
@@ -151,6 +198,18 @@
   </footer>
 
   <script>
+    // Mobile menu toggle script
+    function toggleMenu() {
+      document.getElementById('navItems').classList.toggle('active');
+    }
+
+    // Close menu when clicking a link (improves mobile experience)
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navItems').classList.remove('active');
+      });
+    });
+
     const WORKER_URL = "https://autohooked-chat.radin-hadad2k8.workers.dev/";
 
     const systemPrompt = `You are the AutoHooked AI demo assistant. AutoHooked builds smart software helpers and AI automation for businesses:
