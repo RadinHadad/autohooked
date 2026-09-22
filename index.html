@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
-    /* Mobile Navigation Styles */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -53,11 +52,9 @@
   <nav class="top-nav">
     <div class="nav-wrap">
       <a href="#home" class="brand-logo">
-        <!-- Logo image removed here -->
         <span>Auto<span class="rainbow-text">Hooked</span></span>
       </a>
       
-      <!-- Hamburger Menu Button -->
       <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle navigation">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -179,9 +176,9 @@
           <div class="message ai-message pop-in">Welcome. I am the AutoHooked demonstration helper. How can I assist you with your business today?</div>
         </div>
         <div class="chat-suggestions">
-          <button class="shake-hover" onclick="sendTest('Can you book appointments?')">Book appointments</button>
-          <button class="shake-hover" onclick="sendTest('What platforms do you support?')">Supported platforms</button>
-          <button class="shake-hover" onclick="sendTest('How does this save time?')">How does this save time?</button>
+          <button class="shake-hover" onclick="sendTest('How does the phone assistant handle orders and bookings?')">Orders &amp; Bookings</button>
+          <button class="shake-hover" onclick="sendTest('How does it send caller data to our database?')">Database Integration</button>
+          <button class="shake-hover" onclick="sendTest('How does time validation work for phone scheduling?')">Time Validation</button>
         </div>
         <form class="chat-input-area" onsubmit="handleChat(event)">
           <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off" required>
@@ -198,12 +195,10 @@
   </footer>
 
   <script>
-    // Mobile menu toggle script
     function toggleMenu() {
       document.getElementById('navItems').classList.toggle('active');
     }
 
-    // Close menu when clicking a link (improves mobile experience)
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         document.getElementById('navItems').classList.remove('active');
@@ -212,12 +207,20 @@
 
     const WORKER_URL = "https://autohooked-chat.radin-hadad2k8.workers.dev/";
 
-    const systemPrompt = `You are the AutoHooked AI demo assistant. AutoHooked builds smart software helpers and AI automation for businesses:
-1. Accurate Website Chatbots: trained on business data to answer customer questions accurately without making things up.
-2. Smart Phone Answering: automated phone helper that answers calls instantly, identifies customer needs, and routes urgent calls to real staff.
-3. Social Media Helpers: automates direct messages across Instagram, Facebook, and other platforms to guide buyers and capture leads.
-4. Automatic Calendar Booking: checks live availability and books client appointments without double bookings.
-Keep answers friendly, concise, and under 3 sentences. Direct users to press the consultation button in the top right or press this link (https://autohooked.com/book.html) to navigate to the page if they want to get started or learn more.`;
+    const systemPrompt = `You are the AutoHooked AI demo assistant. AutoHooked builds enterprise-grade AI automation, conversational systems, and high-performance smart software helpers for businesses.
+
+When asked about our AI Phone Answering Assistant, highlight its core automated capabilities:
+1. Automated Orders & Bookings: Takes customer orders, handles appointment or table scheduling, collects customer details one piece at a time, and verifies special instructions smoothly over the phone.
+2. Direct Database & System Integration: Directly sends structured caller data, order line items, timestamps, and customer records straight into your integrated database, CRM, or backend workflows in real time.
+3. Live Business Logic & Time Validation: Automatically checks your live availability and operating hours, calculates accurate pickup or preparation windows, and enforces necessary advance-notice rules before locking in any request.
+4. Intelligent Call Handling: Answers calls instantly 24/7, answers customer questions accurately from your knowledge base, and routes complex or urgent issues to your real team.
+
+AutoHooked also provides:
+- Accurate Website Chatbots: Grounded in your business data to answer visitor inquiries without hallucinations.
+- Social Media Helpers: Automated messaging across platforms to guide buyers and capture leads.
+- Calendar Booking Automation: Real-time appointment scheduling that eliminates double-bookings.
+
+Keep answers friendly, confident, and concise (under 3 sentences). Never provide raw links or URLs; if the user wants to get started or learn more, direct them to click the Consultation button in the top right.`;
 
     let chatHistory = [];
 
@@ -270,7 +273,7 @@ Keep answers friendly, concise, and under 3 sentences. Direct users to press the
         chatHistory.push({ role: 'model', parts: [{ text: reply }] });
         typing.textContent = reply;
       } catch (err) {
-        typing.textContent = 'Our live assistant is temporarily unavailable. Please try again shortly or use the consultation link above.';
+        typing.textContent = 'Our live assistant is temporarily unavailable. Please try again shortly or use the Consultation button in the top right.';
       }
 
       chatBody.scrollTop = chatBody.scrollHeight;
