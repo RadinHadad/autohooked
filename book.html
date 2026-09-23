@@ -360,6 +360,17 @@
         return;
       }
 
+      const cleanPhone = phoneInput.value.trim().replace(/[\s\-\(\)]/g, '');
+      const cancelStorageKey = 'cancels_' + cleanPhone;
+      const currentCancels = parseInt(localStorage.getItem(cancelStorageKey) || '0', 10);
+
+      if (currentCancels >= 3) {
+        statusMsg.className = 'status-msg status-error';
+        statusMsg.textContent = 'This phone number has been blocked due to multiple cancelled verification attempts. Please contact support at +61424892008.';
+        statusMsg.style.display = 'block';
+        return;
+      }
+
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending verification code...';
       statusMsg.style.display = 'none';
@@ -387,6 +398,11 @@
 
           const enteredCode = window.prompt(promptMsg);
           if (!enteredCode) {
+            const updatedCancels = parseInt(localStorage.getItem(cancelStorageKey) || '0', 10) + 1;
+            localStorage.setItem(cancelStorageKey, updatedCancels);
+            if (updatedCancels >= 3) {
+              throw new Error('blocked_cancellations');
+            }
             throw new Error('cancelled');
           }
 
@@ -400,6 +416,7 @@
 
           if (verifyRes.ok) {
             verified = true;
+            localStorage.removeItem(cancelStorageKey);
             break;
           }
 
@@ -452,13 +469,16 @@
       } catch (err) {
         statusMsg.className = 'status-msg status-error';
         if (err.message === 'blocked') {
-          statusMsg.textContent = 'This phone number has been blocked due to multiple failed verification attempts. Please contact support.';
+          statusMsg.textContent = 'This phone number has been blocked due to multiple failed verification attempts. Please contact support at +61424892008.';
+        } else if (err.message === 'blocked_cancellations') {
+          statusMsg.textContent = 'This phone number has been blocked due to multiple cancelled verification attempts. Please contact support at +61424892008.';
         } else if (err.message === 'invalid_phone') {
           statusMsg.textContent = 'This phone number is not valid or cannot receive messages. Please try again.';
         } else if (err.message === 'cancelled') {
-          statusMsg.textContent = 'Verification cancelled. Please submit the form again to receive a new code.';
+          const count = parseInt(localStorage.getItem(cancelStorageKey) || '0', 10);
+          statusMsg.textContent = `Verification cancelled (${count}/3). Please submit the form again to receive a new code.`;
         } else {
-          statusMsg.textContent = 'Something went wrong while securing your slot. Please try again or reach out directly.';
+          statusMsg.textContent = 'Something went wrong while securing your slot. Please try again or reach out directly at +61424892008.';
         }
         statusMsg.style.display = 'block';
       } finally {
